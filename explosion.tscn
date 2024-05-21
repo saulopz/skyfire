@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://3gwkjd1fqolc"]
+
+[ext_resource type="Script" path="res://explosion.gd" id="1_npljc"]
+[ext_resource type="Texture2D" uid="uid://br7s4bkwac4wp" path="res://assets/explosion_0.png" id="1_pgqhe"]
+[ext_resource type="Texture2D" uid="uid://cs3tkyh5w7b6o" path="res://assets/explosion_1.png" id="2_6oqve"]
+[ext_resource type="Texture2D" uid="uid://cnl35gj28cu26" path="res://assets/explosion_2.png" id="3_aq7s2"]
+[ext_resource type="AudioStream" uid="uid://byc3032odf5ck" path="res://assets/explosion.wav" id="4_d3ceh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_knorf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_pgqhe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6oqve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_aq7s2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6oqve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_pgqhe")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v2cdc"]
+
+[node name="Explosion" type="CharacterBody2D"]
+position = Vector2(-1, 0)
+script = ExtResource("1_npljc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_knorf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_v2cdc")
+disabled = true
+
+[node name="SoundExplosion" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_d3ceh")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

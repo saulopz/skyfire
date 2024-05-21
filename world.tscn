@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://cijig53csphyk"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_spbcd"]
+[ext_resource type="PackedScene" uid="uid://c2idsmtt5v46l" path="res://sky.tscn" id="2_2gxxe"]
+[ext_resource type="PackedScene" uid="uid://dp0ueym2w6qm0" path="res://ship.tscn" id="3_448nl"]
+[ext_resource type="AudioStream" uid="uid://cq2jm6h3vbfyg" path="res://assets/music.ogg" id="4_0t1pc"]
+[ext_resource type="Texture2D" uid="uid://hfyifs12kjso" path="res://assets/gameover.png" id="5_o6fas"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_spbcd")
+
+[node name="Sky" parent="." instance=ExtResource("2_2gxxe")]
+
+[node name="Ship" parent="." instance=ExtResource("3_448nl")]
+position = Vector2(570, 593)
+
+[node name="EnemyTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0t1pc")
+autoplay = true
+
+[node name="GameOver" type="TextureRect" parent="."]
+visible = false
+offset_left = 418.0
+offset_top = 262.0
+offset_right = 674.0
+offset_bottom = 357.0
+texture = ExtResource("5_o6fas")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 8.0
+offset_top = -1.0
+offset_right = 112.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "SCORE:"
+
+[node name="Score" type="Label" parent="."]
+offset_left = 115.0
+offset_top = -1.0
+offset_right = 172.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "0"
+
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]
