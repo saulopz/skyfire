@@ -4,7 +4,7 @@ Autor: Saulo Popov Zambiasi
 
 E-mail: saulopz@gmail.com
 
-![Screenshot](docs/skyfire_screenshot.png)
+![Screenshot](docs/skyfire_screenshot.jpg)
 
 ## Sobre
 
