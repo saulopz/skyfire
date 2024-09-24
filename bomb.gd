@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
-const type = 'bomb'
-var speed = 200
+const type : String = "bomb"
+var speed : int = 200
 
-func _ready(): 
+func _ready() -> void: 
 	$SoundBomb.play()
 
-func _process(delta):
+func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(Vector2(0, -speed) * delta)
 	if collision:
 		var entity = collision.get_collider()

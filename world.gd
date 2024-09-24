@@ -7,14 +7,14 @@ const Ship = preload("res://ship.tscn")
 const Bomb = preload("res://bomb.tscn")
 const Enemy = preload("res://enemy.tscn")
 const Explosion = preload("res://explosion.tscn")
-var score = 0                # pontuacao
-var is_game_over = false     # se o jogo terminou
-var screensize               # tamanho da tela
+var score: int = 0              # pontuacao
+var is_game_over: bool = false  # se o jogo terminou
+var screensize: Vector2         # tamanho da tela
 
-func _ready():
+func _ready() -> void:
 	screensize = get_viewport_rect().size
 
-func _process(_delta):
+func _physics_process(_delta: float) -> void:
 	# Se for gameover e pressionar esc, o jogo reinicia
 	if is_game_over:
 		if Input.is_action_just_pressed("ui_cancel"):
@@ -34,11 +34,11 @@ func _reset():
 	$EnemyTimer.start()                 # iniciamos o timer para criar inimigos
 
 # Alteramos a pontuacao
-func change_score(pts):
+func change_score(pts: int):
 	score += pts
 	$Score.text = str(score)
 
-func game_over():
+func game_over() -> void:
 	is_game_over = true         # gameover true
 	$GameOver.visible = true    # mostramos a imagem gameover
 	$Music.stop()               # paramos a musica
@@ -46,7 +46,7 @@ func game_over():
 
 # Funcao usada para criar uma explosao em uma posicao (pos) especifica
 # normamente vai ser a propria posicao do elemento que morreu
-func new_explosion(pos):
+func new_explosion(pos: Vector2):
 	var explosion = Explosion.instantiate() # instanciamos um objeto Explosion
 	explosion.position = pos                # colocamos ele na posicao
 	add_child(explosion)                    # adicionamos ao jogo
@@ -57,13 +57,13 @@ func new_explosion(pos):
 # da largura da imagem da bomba. Esse calculo fazemos la no
 # script de Ship. Isso para que a bombinha fique centralizada
 # tambem colocamos, y acima da nave.
-func new_bomb(pos):
+func new_bomb(pos: Vector2) -> void:
 	var bomb = Bomb.instantiate()  # Instanciamos um objeto bomba
 	bomb.position = pos            # colocamos ele na posicao
 	add_child(bomb)                # adicinamos ela ao jogo
 
 # Quando o timer de criacao do inimigo der timeout
-func _on_enemy_timer_timeout():
+func _on_enemy_timer_timeout() -> void:
 	if is_game_over:                           # se gameover nao cria mais
 		return
 	var enemy = Enemy.instantiate()            # instancia um novo inimigo

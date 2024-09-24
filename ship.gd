@@ -1,23 +1,23 @@
 extends CharacterBody2D
 
-const type = 'ship'  # tipo do personagem
-var speed = 500      # velocidade para os lados
-var screensize       # tamanho da tela
-var h                # altura da imagem
-var half_w           # metade da largura da imagem
-var half_h           # metade da altura da imagem
+const type : String = "ship"
+var speed : int = 500     # velocidade para os lados
+var screensize : Vector2  # tamanho da tela
+var h : int               # altura da imagem
+var half_w : int          # metade da largura da imagem
+var half_h : int          # metade da altura da imagem
 
 # Quando o personagem eh criado, ele eh colocado no
 # meio da tela, so que temos um deslocamento para a esquerda
 # contando metade da textura da nave, senao a nave fica meio
 # para a direita, por isso precisamos do half_w
-func _ready():
+func _ready() -> void:
 	screensize = get_viewport_rect().size
 	h = $Sprite2D.texture.get_height()
 	half_w = $Sprite2D.texture.get_width() / 2
-	half_h = h / 2
+	half_h = int(h / 2.0)
 
-func _process(delta):
+func _process(delta) -> void:
 	var vec = Vector2()
 	if Input.is_action_pressed("ui_left"):
 		vec.x -= speed
@@ -34,7 +34,7 @@ func _process(delta):
 	if get_parent().score < 0:
 		kill()
 
-func kill():
+func kill() -> void:
 	queue_free()
 	get_parent().new_explosion(position)
 	get_parent().game_over()

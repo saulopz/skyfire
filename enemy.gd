@@ -1,32 +1,31 @@
 extends CharacterBody2D
 
-const type = 'enemy'
-const LEFT = 0
-const RIGHT = 1
+const type : String = "enemy"
+const LEFT : int = 0
+const RIGHT : int = 1
+var screensize : Vector2  # tamanho da tela
+var direction : int       # direcao do inimigo [esquerda|direita]
+var w : int               # largura da imagem
+var h : int               # altura da imagem
+var half_w : int          # metade da largura da imagem
+var half_h : int          # metade da altura da imagem
+var speed_y : int = 200   # velocidade para baixo
+var speed_x : int = 300   # velocidade para os lados
 
-var screensize      # tamanho da tela
-var direction       # direcao do inimigo [esquerda|direita]
-var w               # largura da imagem
-var h               # altura da imagem
-var half_w          # metade da largura da imagem
-var half_h          # metade da altura da imagem
-var speed_y = 200   # velocidade para baixo
-var speed_x = 300   # velocidade para os lados
-
-func _ready():
+func _ready() -> void:
 	randomize()
 	screensize = get_viewport_rect().size
 	w = $Sprite2D.texture.get_width()
 	h = $Sprite2D .texture.get_height()
-	half_w = w / 2
-	half_h = h / 2
+	half_w = int(w / 2.0)
+	half_h = int(h / 2.0)
 	# Criamos nosso inimigo acima da area visivel do jogo
 	# com posicao e direcao aleatorias
 	position.x = (randi() % int(screensize.x - w)) + half_w
 	position.y = -100
 	direction = randi() % 2
 	
-func _process(delta):
+func _process(delta) -> void:
 	var vec = Vector2()
 	vec.y += speed_y
 	# Se o inimigo encosta dos lados da tela, ele muda a
@@ -56,6 +55,6 @@ func _process(delta):
 
 # Se o inimigo morrer, cria uma explosao nessa mesma posicao
 # e retira o inimigo do jogo com queue_free.
-func kill():
+func kill() -> void:
 	get_parent().new_explosion(position)
 	queue_free()
